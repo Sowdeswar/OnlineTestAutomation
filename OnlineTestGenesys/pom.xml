@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.example</groupId>
   <artifactId>OnlineTestGenesys</artifactId>
@@ -28,31 +28,25 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-<!--  <repositories>-->
-<!--    <repository>-->
-<!--      <id>allure</id>-->
-<!--      <url>https://dl.bintray.com/qameta/maven</url>-->
-<!--    </repository>-->
-<!--  </repositories>-->
   <dependencies>
-      <dependency>
-        <groupId>io.cucumber</groupId>
-        <artifactId>cucumber-java</artifactId>
-        <version>7.10.0</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.cucumber</groupId>
-        <artifactId>cucumber-junit</artifactId>
-        <version>7.10.0</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.13.2</version>
-        <scope>test</scope>
-      </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>7.10.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>7.10.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>com.googlecode.json-simple</groupId>
       <artifactId>json-simple</artifactId>
@@ -62,11 +56,6 @@
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <version>5.4.0</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>RELEASE</version>
     </dependency>
     <dependency>
       <groupId>io.qameta.allure</groupId>
@@ -79,8 +68,6 @@
       <artifactId>aspectjweaver</artifactId>
       <version>1.9.22</version>
     </dependency>
-
-
   </dependencies>
 
   <build>
@@ -102,15 +89,16 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M5</version>
         <configuration>
-          <systemPropertyVariable>
+          <systemPropertyVariables>
             <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+            <allure.report.directory>${project.build.directory}/allure-results/html-reports</allure.report.directory>
             <allure.link.issue.pattern>
               https://example.org/browser/{}
             </allure.link.issue.pattern>
             <allure.link.tms.pattern>
               https://example.org/browser/{}
             </allure.link.tms.pattern>
-          </systemPropertyVariable>
+          </systemPropertyVariables>
           <argLine>
             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/aspectjweaver-1.9.22.jar"
             -DCucumber.options="--plugin io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
@@ -125,10 +113,8 @@
         <artifactId>allure-maven</artifactId>
         <version>2.10.0</version>
         <configuration>
-          <properties>
             <reportDirectory>${project.build.directory}/allure-results/html-reports</reportDirectory>
             <reportVersion>2.17.0</reportVersion>
-          </properties>
         </configuration>
       </plugin>
     </plugins>
