@@ -1,5 +1,9 @@
 package onlineTest.Genesys.StepDefinitions;
 
+import io.cucumber.java.Scenario;
+import org.junit.After;
+import org.junit.Before;
+
 public class Hooks {
   public  static Scenario scenario;
 
@@ -11,7 +15,7 @@ public class Hooks {
     }
 
     @Before
-    public void beforeScenario(Scenario scenario) {
+    public void beforeScenario() {
         Hooks.scenario = scenario;
     }
 }
