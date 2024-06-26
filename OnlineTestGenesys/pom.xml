@@ -6,8 +6,35 @@
   <version>1.0-SNAPSHOT</version>
   <name>Archetype - OnlineTestGenesys</name>
   <url>https://maven.apache.org</url>
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <aspectj.version>1.9.22</aspectj.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>messages</artifactId>
+        <version>19.1.4</version>
+      </dependency>
+      <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-bom</artifactId>
+        <version>7.10.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+<!--  <repositories>-->
+<!--    <repository>-->
+<!--      <id>allure</id>-->
+<!--      <url>https://dl.bintray.com/qameta/maven</url>-->
+<!--    </repository>-->
+<!--  </repositories>-->
   <dependencies>
-
       <dependency>
         <groupId>io.cucumber</groupId>
         <artifactId>cucumber-java</artifactId>
@@ -26,16 +53,11 @@
         <version>4.13.2</version>
         <scope>test</scope>
       </dependency>
-    <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
     <dependency>
       <groupId>com.googlecode.json-simple</groupId>
       <artifactId>json-simple</artifactId>
       <version>1.1.1</version>
     </dependency>
-
-
-
-    <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
@@ -45,7 +67,70 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>RELEASE</version>
-      <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-cucumber7-jvm</artifactId>
+      <version>2.19.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.9.22</version>
+    </dependency>
+
+
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.12.1</version>
+        <configuration>
+          <encoding>UTF-8</encoding>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+
+      </plugin>
+      <!-- Maven Surefire Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M5</version>
+        <configuration>
+          <systemPropertyVariable>
+            <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+            <allure.link.issue.pattern>
+              https://example.org/browser/{}
+            </allure.link.issue.pattern>
+            <allure.link.tms.pattern>
+              https://example.org/browser/{}
+            </allure.link.tms.pattern>
+          </systemPropertyVariable>
+          <argLine>
+            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/aspectjweaver-1.9.22.jar"
+            -DCucumber.options="--plugin io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+          </argLine>
+          <skipTests>false</skipTests>
+        </configuration>
+      </plugin>
+
+      <!-- Allure Maven Plugin -->
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>2.10.0</version>
+        <configuration>
+          <properties>
+            <reportDirectory>${project.build.directory}/allure-results/html-reports</reportDirectory>
+            <reportVersion>2.17.0</reportVersion>
+          </properties>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

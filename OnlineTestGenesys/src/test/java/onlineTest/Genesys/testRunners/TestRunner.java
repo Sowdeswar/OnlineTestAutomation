@@ -7,7 +7,8 @@ import io.cucumber.junit.Cucumber;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/Features",
                 glue="onlineTest.Genesys.StepDefinitions",
-                plugin={"json:target/cucumber-reports/CucumberTestReport.json"})
+                plugin={"pretty", "html:target/cucumber-report","io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"}
+)
 
 public class TestRunner {
 

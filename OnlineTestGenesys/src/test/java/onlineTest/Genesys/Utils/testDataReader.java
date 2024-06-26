@@ -14,10 +14,10 @@ public class testDataReader {
         try{
 
             BufferedReader bufferedReader=new BufferedReader(new FileReader(TESTDATA_PATH + fileName));
-while ((dataLine=bufferedReader.readLine())!=null){
-    stringBuilder.append(dataLine);
-}
-bufferedReader.close();
+            while ((dataLine=bufferedReader.readLine())!=null){
+                stringBuilder.append(dataLine);
+                    }
+            bufferedReader.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

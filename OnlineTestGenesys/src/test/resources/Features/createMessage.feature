@@ -11,10 +11,18 @@ Feature: CreateMessages
     |createPayload.json|200  |id         |
 
     Scenario: Verify the user is able to get the message details by using the ID
-      When user make a get request to get the message details by using "<ID>"
+      When user make a get request to get the message details by using id
       Then user should receive the <200>
       And user should receive the "id" in the response body
 
-#    Scenario: Verify the user is able to get the message details by using the from and to name
-#      When user make a get request to get the list of message details "<from>" "<testfrom>" "<to>" "<testto>"
-#      Then user should receive the <200>
+    Scenario Outline: Verify the user is able to get the message details by using the from and to name
+      When user make a get request to get the list of message details "<from>" "<to>"
+      Then user should receive the <statusCode>
+
+      Examples:
+      |from|to|statusCode|
+      |testfrom|testto|200|
+
+  Scenario: Verify the user is able to delete the message details by using the ID
+    When user make a delete request to delete the message details by using id
+    Then user should receive the <204>

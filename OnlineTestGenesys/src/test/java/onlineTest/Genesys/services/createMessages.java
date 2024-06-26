@@ -1,12 +1,14 @@
-package services;
+package onlineTest.Genesys.services;
 
-import io.cucumber.core.internal.com.fasterxml.jackson.core.JsonParser;
 import io.restassured.response.Response;
-import org.json.simple.JSONArray;
+import onlineTest.Genesys.Utils.APIUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.junit.Assert;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class createMessages {
 
@@ -16,6 +18,18 @@ public class createMessages {
     public static JSONObject messageResponseObj=new JSONObject();
     public static JSONObject fromid=new JSONObject();
     public static JSONObject toid=new JSONObject();
+    Map<String , Object> queryParamMap=new HashMap<String , Object>();
+
+    APIUtils apiUtilsObj=new APIUtils();
+
+    public  void getMessageSetUpUsingQueryParam(String from,String to){
+        if(!queryParamMap.isEmpty())
+            queryParamMap.clear();
+        queryParamMap.put("from",from);
+        queryParamMap.put("to",to);
+        apiUtilsObj.setQueryParam(queryParamMap);
+
+    }
 
     public void getIDValueFromResponse(String attribute, Response response) {
         String responseBody = response.getBody().asString();
@@ -27,12 +41,6 @@ public class createMessages {
             throw new RuntimeException(e);
         }
         messageResponseObj=(JSONObject) responseBodyObj;
-//        fromid =(JSONObject) messageResponseObj.get("from");
-//        JSONObject fromObj=(JSONObject) fromid.get(0);
-//        System.out.println("from id "+fromObj.get(attribute));
-//        toid =(JSONObject) messageResponseObj.get("from");
-//        JSONObject toObj=(JSONObject) toid.get(0);
-//        System.out.println("to id "+toObj.get(attribute));
         id= messageResponseObj.get(attribute).toString();
         Assert.assertTrue("Response contains the id ",messageResponseObj.get(attribute).toString()!=null);
         System.out.println(id);

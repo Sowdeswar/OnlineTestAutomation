@@ -4,6 +4,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import java.util.Map;
+
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
@@ -15,9 +17,8 @@ public class APIUtils {
         requestSpecification=given().baseUri(baseURI).basePath(pathParam);
     }
 
-    public void setQueryParam(String queryParam, String queryParamValue){
-        requestSpecification=given().baseUri(baseURI).queryParams(queryParam,
-                queryParamValue);
+    public void setQueryParam(Map<String,Object> queryParam){
+        requestSpecification=given().baseUri(baseURI).queryParams(queryParam);
     }
 
     public Response postRequest(String requestBody){
@@ -25,8 +26,13 @@ public class APIUtils {
         return response;
     }
 
-    public Response getResponse(){
+    public Response getRequest(){
         response=requestSpecification.get();
+        return response;
+    }
+
+    public Response deleteRequest(){
+        response =requestSpecification.delete();
         return response;
     }
 }
