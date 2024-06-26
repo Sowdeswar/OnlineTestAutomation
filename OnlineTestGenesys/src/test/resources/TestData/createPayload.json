@@ -1,0 +1,9 @@
+{
+  "from": {
+    "id": "testfrom"
+  },
+  "to": {
+    "id": "testto"
+  },
+  "message": "testdata"
+}
