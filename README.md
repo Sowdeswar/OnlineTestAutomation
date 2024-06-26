@@ -22,7 +22,7 @@ List of API as part of the test validation:
 Execution Methods:
 •	Have integrated the allure reports into the framework. Run the below command to start the execution of the script.
       mvn clean test allure:report
-•	We can see the reports are generated in the target\site\allure-maven-plugin.
+•	We can see the reports are generated in the target/allure-results/html-reports.
 •	Under the index.html file will be available which can be opened in the browsers to view the overall test summary.
 
 [OnlineTestAutomationReadme.docx](https://github.com/user-attachments/files/15984321/OnlineTestAutomationReadme.docx)
