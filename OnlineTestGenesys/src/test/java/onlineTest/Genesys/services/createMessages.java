@@ -13,11 +13,7 @@ import java.util.Map;
 public class createMessages {
 
     public static String id;
-    public static String fromMessageName;
-    public static String toMessageName;
     public static JSONObject messageResponseObj=new JSONObject();
-    public static JSONObject fromid=new JSONObject();
-    public static JSONObject toid=new JSONObject();
     Map<String , Object> queryParamMap=new HashMap<String , Object>();
 
     APIUtils apiUtilsObj=new APIUtils();
@@ -31,6 +27,18 @@ public class createMessages {
 
     }
 
+    public void getMessageSetPathParam(String pathParam){
+        if(pathParam.equals("Valid")){
+            apiUtilsObj.setPathParam(id);
+        }
+        else if(pathParam.equals("InValid")){
+            apiUtilsObj.setPathParam("12345678");
+        }
+        else{
+            apiUtilsObj.setPathParam(pathParam);
+        }
+    }
+
     public void getIDValueFromResponse(String attribute, Response response) {
         String responseBody = response.getBody().asString();
         Object responseBodyObj = null;
@@ -41,8 +49,15 @@ public class createMessages {
             throw new RuntimeException(e);
         }
         messageResponseObj=(JSONObject) responseBodyObj;
-        id= messageResponseObj.get(attribute).toString();
-        Assert.assertTrue("Response contains the id ",messageResponseObj.get(attribute).toString()!=null);
-        System.out.println(id);
+        if(attribute.equals("id")){
+            id= messageResponseObj.get(attribute).toString();
+            Assert.assertTrue("Response contains the id ",messageResponseObj.get(attribute).toString()!=null);
+        }
+        else if(attribute.equals("message")){
+            JSONObject errorObj;
+            errorObj = (JSONObject) ((JSONObject) messageResponseObj).get("error");
+            Assert.assertTrue("Response contains the id ",errorObj.get(attribute).toString()!=null);
+        }
+
     }
 }

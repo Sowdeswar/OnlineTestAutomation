@@ -26,6 +26,11 @@ public class APIUtils {
         return response;
     }
 
+    public Response putRequest(String requestBody){
+        response=requestSpecification.contentType(ContentType.JSON).body(requestBody).put();
+        return response;
+    }
+
     public Response getRequest(){
         response=requestSpecification.get();
         return response;

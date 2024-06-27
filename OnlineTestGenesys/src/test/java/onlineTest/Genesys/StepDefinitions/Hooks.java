@@ -1,21 +1,17 @@
 package onlineTest.Genesys.StepDefinitions;
 
 import io.cucumber.java.Scenario;
-import org.junit.After;
-import org.junit.Before;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 
 public class Hooks {
   public  static Scenario scenario;
-
-    @After
-    public void afterScenario() {
-        if(scenario.isFailed()) {
-            System.out.println("Scenario Failed");
-        }
-    }
+  public static String scenarioName;
 
     @Before
-    public void beforeScenario() {
-        Hooks.scenario = scenario;
+    public void beforeScenario(Scenario scenario) {
+       // Hooks.scenario = scenario;
+        scenarioName=scenario.getName();
+        System.out.println(scenarioName);
     }
 }
